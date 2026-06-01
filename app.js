@@ -21,6 +21,8 @@ const translations = {
     moonValue: "Waxing",
     daily: "7 day forecast",
     photoCaption: "Scenic forecast view for {city}",
+    landmarkCaption: "{landmark} · {city}",
+    landmarkCredit: "via Wikipedia",
     supportKicker: "Community funded",
     supportTitle: "Support Talibenah",
     supportCopy: "Small contributions help keep forecasts clean, fast, and ad-free.",
@@ -51,6 +53,8 @@ const translations = {
     moonValue: "افزاینده",
     daily: "پیش‌بینی ۷ روزه",
     photoCaption: "نمای گردشگری پیش‌بینی هوا برای {city}",
+    landmarkCaption: "{landmark} · {city}",
+    landmarkCredit: "از ویکی‌پدیا",
     supportKicker: "حمایت مردمی",
     supportTitle: "حمایت از تالیبنه",
     supportCopy: "کمک‌های کوچک باعث می‌شود پیش‌بینی‌ها سریع، تمیز و بدون تبلیغ بمانند.",
@@ -81,6 +85,8 @@ const translations = {
     moonValue: "În creștere",
     daily: "Prognoză pe 7 zile",
     photoCaption: "Vedere scenică pentru prognoza din {city}",
+    landmarkCaption: "{landmark} · {city}",
+    landmarkCredit: "via Wikipedia",
     supportKicker: "Susținut de comunitate",
     supportTitle: "Susține Talibenah",
     supportCopy: "Contribuțiile mici ajută prognozele să rămână rapide, curate și fără reclame.",
@@ -290,6 +296,9 @@ let currentWeatherCode = 61;
 let currentLocation = knownLocations.get("talibenah");
 let layoutState = loadLayoutState();
 let lastWeather = null;
+let landmarkIndex = new Map();
+let activeLandmark = null;
+let landmarksReady = null;
 
 function normalizeCity(value) {
   return value

@@ -1,0 +1,329 @@
+{
+  "_meta": {
+    "version": 1,
+    "description": "Curated city -> famous landmark database. The hero background image and credit are fetched live from the Wikipedia REST summary endpoint for `wiki`. Cities not listed here fall back to the automatic image search.",
+    "imageSource": "https://en.wikipedia.org/api/rest_v1/page/summary/{wiki}"
+  },
+  "cities": [
+    {
+      "keys": ["talibenah", "talybeneh", "تالیبنه"],
+      "city": "Talibenah",
+      "country": "Iran",
+      "category": "nature",
+      "landmark": { "en": "Talibenah mountains", "fa": "کوهستان تالیبنه", "ro": "Munții Talibenah" },
+      "local": "assets/talibenah-mountain.png"
+    },
+    {
+      "keys": ["tehran", "تهران"],
+      "city": "Tehran",
+      "country": "Iran",
+      "category": "landmark",
+      "landmark": { "en": "Azadi Tower", "fa": "برج آزادی", "ro": "Turnul Azadi" },
+      "wiki": "Azadi_Tower"
+    },
+    {
+      "keys": ["isfahan", "esfahan", "اصفهان"],
+      "city": "Isfahan",
+      "country": "Iran",
+      "category": "historical",
+      "landmark": { "en": "Naqsh-e Jahan Square", "fa": "میدان نقش جهان", "ro": "Piața Naqsh-e Jahan" },
+      "wiki": "Naqsh-e_Jahan_Square"
+    },
+    {
+      "keys": ["shiraz", "شیراز"],
+      "city": "Shiraz",
+      "country": "Iran",
+      "category": "historical",
+      "landmark": { "en": "Nasir-ol-Molk Mosque", "fa": "مسجد نصیرالملک", "ro": "Moscheea Nasir-ol-Molk" },
+      "wiki": "Nasir_al-Mulk_Mosque"
+    },
+    {
+      "keys": ["yazd", "یزد"],
+      "city": "Yazd",
+      "country": "Iran",
+      "category": "historical",
+      "landmark": { "en": "Amir Chakhmaq Complex", "fa": "مجموعه امیرچخماق", "ro": "Complexul Amir Chakhmaq" },
+      "wiki": "Amir_Chakhmaq_Complex"
+    },
+    {
+      "keys": ["tabriz", "تبریز"],
+      "city": "Tabriz",
+      "country": "Iran",
+      "category": "historical",
+      "landmark": { "en": "Blue Mosque", "fa": "مسجد کبود", "ro": "Moscheea Albastră" },
+      "wiki": "Blue_Mosque,_Tabriz"
+    },
+    {
+      "keys": ["mashhad", "مشهد"],
+      "city": "Mashhad",
+      "country": "Iran",
+      "category": "landmark",
+      "landmark": { "en": "Imam Reza Shrine", "fa": "حرم امام رضا", "ro": "Sanctuarul Imam Reza" },
+      "wiki": "Imam_Reza_shrine"
+    },
+    {
+      "keys": ["qom", "قم"],
+      "city": "Qom",
+      "country": "Iran",
+      "category": "landmark",
+      "landmark": { "en": "Fatima Masumeh Shrine", "fa": "حرم فاطمه معصومه", "ro": "Sanctuarul Fatima Masumeh" },
+      "wiki": "Fatima_Masumeh_Shrine"
+    },
+    {
+      "keys": ["kerman", "کرمان"],
+      "city": "Kerman",
+      "country": "Iran",
+      "category": "historical",
+      "landmark": { "en": "Ganjali Khan Complex", "fa": "مجموعه گنجعلی‌خان", "ro": "Complexul Ganjali Khan" },
+      "wiki": "Ganjali_Khan_Complex"
+    },
+    {
+      "keys": ["kermanshah", "کرمانشاه"],
+      "city": "Kermanshah",
+      "country": "Iran",
+      "category": "historical",
+      "landmark": { "en": "Taq-e Bostan", "fa": "طاق بستان", "ro": "Taq-e Bostan" },
+      "wiki": "Taq-e_Bostan"
+    },
+    {
+      "keys": ["hamadan", "همدان"],
+      "city": "Hamadan",
+      "country": "Iran",
+      "category": "historical",
+      "landmark": { "en": "Avicenna Mausoleum", "fa": "آرامگاه بوعلی سینا", "ro": "Mausoleul Avicenna" },
+      "wiki": "Avicenna_Mausoleum"
+    },
+    {
+      "keys": ["kish", "کیش", "kish island"],
+      "city": "Kish",
+      "country": "Iran",
+      "category": "nature",
+      "landmark": { "en": "Kish Island", "fa": "جزیره کیش", "ro": "Insula Kish" },
+      "wiki": "Kish_Island"
+    },
+    {
+      "keys": ["rasht", "رشت"],
+      "city": "Rasht",
+      "country": "Iran",
+      "category": "historical",
+      "landmark": { "en": "Rasht City Hall Square", "fa": "میدان شهرداری رشت", "ro": "Piața Primăriei Rasht" },
+      "wiki": "Rasht"
+    },
+    {
+      "keys": ["lahijan", "لاهیجان"],
+      "city": "Lahijan",
+      "country": "Iran",
+      "category": "nature",
+      "landmark": { "en": "Lahijan tea hills", "fa": "تپه‌های چای لاهیجان", "ro": "Dealurile de ceai Lahijan" },
+      "wiki": "Lahijan"
+    },
+    {
+      "keys": ["anzali", "bandar anzali", "انزلی", "بندر انزلی"],
+      "city": "Bandar Anzali",
+      "country": "Iran",
+      "category": "nature",
+      "landmark": { "en": "Anzali Lagoon", "fa": "تالاب انزلی", "ro": "Laguna Anzali" },
+      "wiki": "Anzali_Lagoon"
+    },
+    {
+      "keys": ["masuleh", "masouleh", "ماسوله"],
+      "city": "Masuleh",
+      "country": "Iran",
+      "category": "nature",
+      "landmark": { "en": "Masuleh village", "fa": "روستای ماسوله", "ro": "Satul Masuleh" },
+      "wiki": "Masuleh"
+    },
+    {
+      "keys": ["fuman", "fooman", "فومن"],
+      "city": "Fuman",
+      "country": "Iran",
+      "category": "historical",
+      "landmark": { "en": "Rudkhan Castle", "fa": "قلعه رودخان", "ro": "Castelul Rudkhan" },
+      "wiki": "Rudkhan_Castle"
+    },
+    {
+      "keys": ["bucharest", "bucuresti", "bucurești", "بخارست"],
+      "city": "Bucharest",
+      "country": "Romania",
+      "category": "landmark",
+      "landmark": { "en": "Palace of the Parliament", "fa": "کاخ پارلمان", "ro": "Palatul Parlamentului" },
+      "wiki": "Palace_of_the_Parliament"
+    },
+    {
+      "keys": ["brasov", "brașov", "braşov", "براشوف"],
+      "city": "Brașov",
+      "country": "Romania",
+      "category": "historical",
+      "landmark": { "en": "Black Church", "fa": "کلیسای سیاه", "ro": "Biserica Neagră" },
+      "wiki": "Black_Church_(Brașov)"
+    },
+    {
+      "keys": ["sinaia", "سینایا"],
+      "city": "Sinaia",
+      "country": "Romania",
+      "category": "historical",
+      "landmark": { "en": "Peleș Castle", "fa": "کاخ پلش", "ro": "Castelul Peleș" },
+      "wiki": "Peleș_Castle"
+    },
+    {
+      "keys": ["bran", "bran castle", "bran, romania"],
+      "city": "Bran",
+      "country": "Romania",
+      "category": "historical",
+      "landmark": { "en": "Bran Castle", "fa": "قلعه بران", "ro": "Castelul Bran" },
+      "wiki": "Bran_Castle"
+    },
+    {
+      "keys": ["cluj", "cluj-napoca", "cluj napoca", "کلوژ"],
+      "city": "Cluj-Napoca",
+      "country": "Romania",
+      "category": "historical",
+      "landmark": { "en": "St. Michael's Church", "fa": "کلیسای سنت مایکل", "ro": "Biserica Sfântul Mihail" },
+      "wiki": "St._Michael's_Church,_Cluj-Napoca"
+    },
+    {
+      "keys": ["sibiu", "سیبیو"],
+      "city": "Sibiu",
+      "country": "Romania",
+      "category": "historical",
+      "landmark": { "en": "Sibiu old town", "fa": "بافت قدیمی سیبیو", "ro": "Centrul vechi Sibiu" },
+      "wiki": "Sibiu"
+    },
+    {
+      "keys": ["timisoara", "timișoara", "timişoara"],
+      "city": "Timișoara",
+      "country": "Romania",
+      "category": "historical",
+      "landmark": { "en": "Victory Square", "fa": "میدان پیروزی", "ro": "Piața Victoriei" },
+      "wiki": "Victory_Square,_Timișoara"
+    },
+    {
+      "keys": ["constanta", "constanța", "constanţa"],
+      "city": "Constanța",
+      "country": "Romania",
+      "category": "historical",
+      "landmark": { "en": "Constanța Casino", "fa": "کازینوی کنستانتسا", "ro": "Cazinoul din Constanța" },
+      "wiki": "Constanța_Casino"
+    },
+    {
+      "keys": ["iasi", "iași", "iaşi"],
+      "city": "Iași",
+      "country": "Romania",
+      "category": "historical",
+      "landmark": { "en": "Palace of Culture", "fa": "کاخ فرهنگ", "ro": "Palatul Culturii" },
+      "wiki": "Palace_of_Culture_(Iași)"
+    },
+    {
+      "keys": ["paris", "پاریس"],
+      "city": "Paris",
+      "country": "France",
+      "category": "landmark",
+      "landmark": { "en": "Eiffel Tower", "fa": "برج ایفل", "ro": "Turnul Eiffel" },
+      "wiki": "Eiffel_Tower"
+    },
+    {
+      "keys": ["london", "لندن"],
+      "city": "London",
+      "country": "United Kingdom",
+      "category": "landmark",
+      "landmark": { "en": "Big Ben", "fa": "بیگ بن", "ro": "Big Ben" },
+      "wiki": "Big_Ben"
+    },
+    {
+      "keys": ["istanbul", "استانبول", "استامبول"],
+      "city": "Istanbul",
+      "country": "Türkiye",
+      "category": "historical",
+      "landmark": { "en": "Hagia Sophia", "fa": "ایاصوفیه", "ro": "Hagia Sofia" },
+      "wiki": "Hagia_Sophia"
+    },
+    {
+      "keys": ["rome", "roma", "رم"],
+      "city": "Rome",
+      "country": "Italy",
+      "category": "historical",
+      "landmark": { "en": "Colosseum", "fa": "کلوسئوم", "ro": "Colosseum" },
+      "wiki": "Colosseum"
+    },
+    {
+      "keys": ["new york", "newyork", "new york city", "نیویورک"],
+      "city": "New York",
+      "country": "United States",
+      "category": "landmark",
+      "landmark": { "en": "Statue of Liberty", "fa": "مجسمه آزادی", "ro": "Statuia Libertății" },
+      "wiki": "Statue_of_Liberty"
+    },
+    {
+      "keys": ["dubai", "دبی"],
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "category": "landmark",
+      "landmark": { "en": "Burj Khalifa", "fa": "برج خلیفه", "ro": "Burj Khalifa" },
+      "wiki": "Burj_Khalifa"
+    },
+    {
+      "keys": ["tokyo", "توکیو"],
+      "city": "Tokyo",
+      "country": "Japan",
+      "category": "landmark",
+      "landmark": { "en": "Tokyo Tower", "fa": "برج توکیو", "ro": "Turnul Tokyo" },
+      "wiki": "Tokyo_Tower"
+    },
+    {
+      "keys": ["barcelona", "بارسلونا"],
+      "city": "Barcelona",
+      "country": "Spain",
+      "category": "landmark",
+      "landmark": { "en": "Sagrada Família", "fa": "ساگرادا فامیلیا", "ro": "Sagrada Família" },
+      "wiki": "Sagrada_Família"
+    },
+    {
+      "keys": ["cairo", "قاهره", "giza"],
+      "city": "Cairo",
+      "country": "Egypt",
+      "category": "historical",
+      "landmark": { "en": "Great Pyramid of Giza", "fa": "هرم بزرگ جیزه", "ro": "Marea Piramidă din Giza" },
+      "wiki": "Great_Pyramid_of_Giza"
+    },
+    {
+      "keys": ["moscow", "مسکو"],
+      "city": "Moscow",
+      "country": "Russia",
+      "category": "historical",
+      "landmark": { "en": "Saint Basil's Cathedral", "fa": "کلیسای واسیلی مقدس", "ro": "Catedrala Sfântul Vasile" },
+      "wiki": "Saint_Basil's_Cathedral"
+    },
+    {
+      "keys": ["berlin", "برلین"],
+      "city": "Berlin",
+      "country": "Germany",
+      "category": "landmark",
+      "landmark": { "en": "Brandenburg Gate", "fa": "دروازه براندنبورگ", "ro": "Poarta Brandenburg" },
+      "wiki": "Brandenburg_Gate"
+    },
+    {
+      "keys": ["athens", "athína", "آتن"],
+      "city": "Athens",
+      "country": "Greece",
+      "category": "historical",
+      "landmark": { "en": "Parthenon", "fa": "پارتنون", "ro": "Partenonul" },
+      "wiki": "Parthenon"
+    },
+    {
+      "keys": ["agra", "آگرا", "taj mahal"],
+      "city": "Agra",
+      "country": "India",
+      "category": "historical",
+      "landmark": { "en": "Taj Mahal", "fa": "تاج محل", "ro": "Taj Mahal" },
+      "wiki": "Taj_Mahal"
+    },
+    {
+      "keys": ["sydney", "سیدنی"],
+      "city": "Sydney",
+      "country": "Australia",
+      "category": "landmark",
+      "landmark": { "en": "Sydney Opera House", "fa": "خانه اپرای سیدنی", "ro": "Opera din Sydney" },
+      "wiki": "Sydney_Opera_House"
+    }
+  ]
+}
