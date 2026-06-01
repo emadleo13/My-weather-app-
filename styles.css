@@ -333,7 +333,10 @@ h1 span {
   margin-top: -22px;
   padding: 18px 16px 24px;
   border-radius: 28px 28px 0 0;
-  background: var(--paper);
+  background:
+    linear-gradient(180deg, var(--cond-tint, transparent) 0, transparent 180px),
+    var(--paper);
+  transition: background 500ms ease;
 }
 
 .control-row {
@@ -1356,4 +1359,180 @@ h2 {
   font-size: 0.82rem;
   font-weight: 800;
   color: var(--leaf);
+}
+
+/* ===== Saved cities + favorite star + locate ===== */
+.location-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  cursor: pointer;
+}
+
+.fav-button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.fav-button.is-fav {
+  background: rgba(228, 174, 79, 0.28);
+}
+
+.fav-button.is-fav svg {
+  fill: var(--amber);
+  stroke: var(--amber);
+}
+
+.city-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+}
+
+.city-chip.is-active {
+  border-color: var(--amber);
+  background: rgba(228, 174, 79, 0.26);
+}
+
+.city-chips .city-chip button {
+  min-height: 34px;
+  border: none;
+  background: transparent;
+  backdrop-filter: none;
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 760;
+}
+
+.city-chip > button:first-child {
+  padding: 0 6px 0 12px;
+}
+
+.city-chip .chip-remove {
+  padding: 0 9px 0 3px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1;
+}
+
+.city-chip:not(:has(.chip-remove)) > button {
+  padding: 0 14px;
+}
+
+.icon-button.is-busy {
+  animation: pulse 900ms ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+/* ===== Dark theme ===== */
+[data-theme="dark"] {
+  --paper: #0a1a2e;
+  --ink: #e8f1f8;
+  --muted: #92a6b8;
+  --panel: rgba(255, 255, 255, 0.055);
+  --line: rgba(255, 255, 255, 0.10);
+}
+
+[data-theme="dark"] body {
+  background:
+    radial-gradient(circle at 18% 10%, rgba(40, 72, 120, 0.5), transparent 32rem),
+    linear-gradient(135deg, #081320 0%, #0a1a2e 60%, #0c2440 100%);
+}
+
+[data-theme="dark"] .control-row {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .chip,
+[data-theme="dark"] .text-button {
+  color: #bfe2cf;
+}
+
+[data-theme="dark"] .chip.is-active {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .customize-panel,
+[data-theme="dark"] .widget-panel {
+  background: var(--panel);
+}
+
+[data-theme="dark"] .layout-toggle,
+[data-theme="dark"] .donation-option,
+[data-theme="dark"] .provider {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ink);
+}
+
+[data-theme="dark"] .switch-track {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+[data-theme="dark"] .provider strong,
+[data-theme="dark"] .donation-option strong {
+  color: var(--ink);
+}
+
+[data-theme="dark"] .provider.is-selected {
+  border-color: rgba(59, 143, 99, 0.7);
+  background: rgba(59, 143, 99, 0.18);
+}
+
+[data-theme="dark"] .donation-option.is-selected {
+  background: linear-gradient(180deg, rgba(228, 174, 79, 0.18), rgba(255, 255, 255, 0.04));
+}
+
+[data-theme="dark"] .drawer-nav button:hover,
+[data-theme="dark"] .settings-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .settings-head .icon-button {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .settings-head .icon-button svg,
+[data-theme="dark"] .drawer-nav svg,
+[data-theme="dark"] .cw-cell svg {
+  stroke: #7fc6a0;
+}
+
+[data-theme="dark"] .aqi-track {
+  stroke: rgba(255, 255, 255, 0.10);
+}
+
+[data-theme="dark"] .sun-track {
+  stroke: rgba(255, 255, 255, 0.16);
+}
+
+[data-theme="dark"] .support-panel {
+  border-color: rgba(228, 174, 79, 0.28);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(228, 174, 79, 0.08));
 }

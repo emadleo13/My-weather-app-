@@ -1,0 +1,35 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      ".git/**",
+      ".firebase/**",
+      "node_modules/**",
+      "**/node_modules/**",
+      "**/*.md"
+    ],
+    "headers": [
+      {
+        "source": "sw.js",
+        "headers": [{ "key": "Cache-Control", "value": "no-cache, max-age=0" }]
+      },
+      {
+        "source": "manifest.webmanifest",
+        "headers": [{ "key": "Content-Type", "value": "application/manifest+json" }]
+      },
+      {
+        "source": "/.well-known/assetlinks.json",
+        "headers": [{ "key": "Content-Type", "value": "application/json" }]
+      },
+      {
+        "source": "**/*.apk",
+        "headers": [
+          { "key": "Content-Type", "value": "application/vnd.android.package-archive" },
+          { "key": "Content-Disposition", "value": "attachment; filename=talibenah-weather.apk" }
+        ]
+      }
+    ]
+  }
+}

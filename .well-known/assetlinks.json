@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.talibenah.weather",
+      "sha256_cert_fingerprints": [
+        "24:86:34:3E:32:E0:E2:61:A3:49:5E:B9:C9:B9:12:23:99:72:20:21:C8:1C:F7:A7:7A:9E:4F:9E:C6:60:0E:9D"
+      ]
+    }
+  }
+]

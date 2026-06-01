@@ -30,7 +30,7 @@
               <span class="brand-mark" aria-hidden="true"></span>
               <span data-i18n="brand">Talibenah</span>
             </div>
-            <button class="icon-button" type="button" aria-label="Locate">
+            <button class="icon-button" type="button" aria-label="Use my location" id="locateButton">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
                 <circle cx="12" cy="12" r="5" />
@@ -51,16 +51,16 @@
             </button>
           </form>
 
-          <div class="city-chips" aria-label="Popular city backgrounds">
-            <button type="button" data-city="Rasht, Iran">Rasht</button>
-            <button type="button" data-city="Tehran, Iran">Tehran</button>
-            <button type="button" data-city="Isfahan, Iran">Isfahan</button>
-            <button type="button" data-city="Bucharest, Romania">Bucharest</button>
-          </div>
+          <div class="city-chips" id="cityChips" aria-label="Saved cities"></div>
 
           <section class="current-panel">
             <div>
-              <p class="location" id="locationLabel">Talibenah, Gilan</p>
+              <div class="location-row">
+                <p class="location" id="locationLabel">Talibenah, Gilan</p>
+                <button class="fav-button" id="favButton" type="button" aria-label="Save city">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17l-5.2 2.6 1-5.8L3.5 9.7l5.9-.9L12 3.5Z"/></svg>
+                </button>
+              </div>
               <h1><span id="currentTemp">18</span><span>&deg;</span></h1>
               <p class="condition" data-i18n="condition">Mist and light rain</p>
             </div>

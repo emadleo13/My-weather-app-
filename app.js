@@ -177,6 +177,7 @@ Object.assign(translations.en, {
   on: "On",
   off: "Off",
   settingsItems: {
+    theme: "Theme",
     units: "Units",
     widgetsHome: "Widgets on the home screen",
     ongoing: "On-going notification",
@@ -187,6 +188,7 @@ Object.assign(translations.en, {
     location: "Current location",
     icon: "Weather icon",
   },
+  themeModes: { auto: "Auto (day / night)", light: "Light", dark: "Dark" },
   settingsValues: {
     units: "°C, mm, km, km/h, hPa, 12h",
     alerts: "Alert levels, types, covered regions",
@@ -231,6 +233,7 @@ Object.assign(translations.fa, {
   on: "روشن",
   off: "خاموش",
   settingsItems: {
+    theme: "پوسته",
     units: "واحدها",
     widgetsHome: "ویجت‌ها در صفحه خانه",
     ongoing: "اعلان دائمی",
@@ -241,6 +244,7 @@ Object.assign(translations.fa, {
     location: "موقعیت کنونی",
     icon: "آیکون هوا",
   },
+  themeModes: { auto: "خودکار (روز / شب)", light: "روشن", dark: "تیره" },
   settingsValues: {
     units: "°C، mm، km، km/h، hPa، ۱۲ ساعته",
     alerts: "سطوح، انواع و مناطق تحت پوشش",
@@ -285,6 +289,7 @@ Object.assign(translations.ro, {
   on: "Pornit",
   off: "Oprit",
   settingsItems: {
+    theme: "Temă",
     units: "Unități",
     widgetsHome: "Widget-uri pe ecranul principal",
     ongoing: "Notificare continuă",
@@ -295,6 +300,7 @@ Object.assign(translations.ro, {
     location: "Locația curentă",
     icon: "Pictogramă meteo",
   },
+  themeModes: { auto: "Automat (zi / noapte)", light: "Luminoasă", dark: "Întunecată" },
   settingsValues: {
     units: "°C, mm, km, km/h, hPa, 12h",
     alerts: "Niveluri, tipuri, regiuni acoperite",
@@ -468,6 +474,9 @@ const moonVisual = document.querySelector("#moonVisual");
 const moonPhaseName = document.querySelector("#moonPhaseName");
 const moonIllumination = document.querySelector("#moonIllumination");
 const newMoonDate = document.querySelector("#newMoonDate");
+const locateButton = document.querySelector("#locateButton");
+const favButton = document.querySelector("#favButton");
+const cityChips = document.querySelector("#cityChips");
 const menuButton = document.querySelector("#menuButton");
 const drawer = document.querySelector("#drawer");
 const drawerOverlay = document.querySelector("#drawerOverlay");
@@ -490,7 +499,10 @@ let landmarkIndex = new Map();
 let activeLandmark = null;
 let landmarksReady = null;
 let lastAirQuality = null;
+let lastIsNight = false;
 let settingsState = loadSettings();
+let favorites = loadFavorites();
+const defaultCities = ["Rasht, Iran", "Tehran, Iran", "Isfahan, Iran", "Bucharest, Romania"];
 
 function normalizeCity(value) {
   return value
@@ -559,6 +571,16 @@ function renderLayoutToggles() {
 
 function roundNumber(value, fallback = "--") {
   return Number.isFinite(value) ? Math.round(value) : fallback;
+}
+
+const FA_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
+
+function localizeDigits(value) {
+  if (activeLanguage !== "fa") {
+    return value;
+  }
+
+  return String(value).replace(/[0-9]/g, (d) => FA_DIGITS[Number(d)]);
 }
 
 function getConditionText(code) {
@@ -654,7 +676,7 @@ function formatHourLabel(value) {
     return "--";
   }
 
-  return new Intl.DateTimeFormat(activeLanguage === "fa" ? "fa-IR" : activeLanguage === "ro" ? "ro-RO" : "en-US", {
+  return new Intl.DateTimeFormat(activeLanguage === "fa" ? "fa-IR-u-ca-persian" : activeLanguage === "ro" ? "ro-RO" : "en-US", {
     hour: "2-digit",
     minute: "2-digit",
   }).format(date);
@@ -671,7 +693,7 @@ function formatDayLabel(value, index) {
     return translations[activeLanguage].days[index] || "--";
   }
 
-  return new Intl.DateTimeFormat(activeLanguage === "fa" ? "fa-IR" : activeLanguage === "ro" ? "ro-RO" : "en-US", {
+  return new Intl.DateTimeFormat(activeLanguage === "fa" ? "fa-IR-u-ca-persian" : activeLanguage === "ro" ? "ro-RO" : "en-US", {
     weekday: "short",
   }).format(date);
 }
@@ -781,7 +803,7 @@ async function fetchLiveWeather(location) {
   const params = new URLSearchParams({
     latitude: String(location.latitude),
     longitude: String(location.longitude),
-    current: "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,surface_pressure,wind_speed_10m,wind_direction_10m,cloud_cover,dew_point_2m,visibility,uv_index",
+    current: "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,surface_pressure,wind_speed_10m,wind_direction_10m,cloud_cover,dew_point_2m,visibility,uv_index,is_day",
     hourly: "temperature_2m,precipitation_probability,weather_code",
     daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset,daylight_duration",
     timezone: "auto",
@@ -821,26 +843,29 @@ function updateLiveWeatherUI(weather) {
   conditionIcon.src = getConditionIcon(currentWeatherCode);
   widgetCondition.textContent = getConditionText(currentWeatherCode);
   widgetIcon.src = getConditionIcon(currentWeatherCode);
-  currentTemp.textContent = roundNumber(current.temperature_2m);
-  widgetTemp.textContent = roundNumber(current.temperature_2m);
-  feelsLike.textContent = `${roundNumber(current.apparent_temperature)}\u00b0`;
+  currentTemp.textContent = localizeDigits(roundNumber(current.temperature_2m));
+  widgetTemp.textContent = localizeDigits(roundNumber(current.temperature_2m));
+  feelsLike.textContent = localizeDigits(`${roundNumber(current.apparent_temperature)}\u00b0`);
   const chance = getCurrentRainChance(weather);
-  rainChance.textContent = Number.isFinite(chance) ? `${chance}%` : "--";
-  windSpeed.textContent = `${roundNumber(current.wind_speed_10m)} km/h`;
-  humidityValue.textContent = `${roundNumber(current.relative_humidity_2m)}`;
-  pressureValue.textContent = `${roundNumber(current.surface_pressure)}`;
-  uvValue.textContent = `${roundNumber(current.uv_index, 0)}`;
-  dewValue.textContent = `${roundNumber(current.dew_point_2m)}`;
+  rainChance.textContent = Number.isFinite(chance) ? localizeDigits(`${chance}%`) : "--";
+  windSpeed.textContent = localizeDigits(`${roundNumber(current.wind_speed_10m)} km/h`);
+  humidityValue.textContent = localizeDigits(roundNumber(current.relative_humidity_2m));
+  pressureValue.textContent = localizeDigits(roundNumber(current.surface_pressure));
+  uvValue.textContent = localizeDigits(roundNumber(current.uv_index, 0));
+  dewValue.textContent = localizeDigits(roundNumber(current.dew_point_2m));
 
   // Current weather icon grid
-  cwTemp.textContent = roundNumber(current.temperature_2m);
-  cwFeels.textContent = roundNumber(current.apparent_temperature);
-  precipValue.textContent = roundNumber(current.precipitation * 10) / 10 || 0;
-  cloudValue.textContent = roundNumber(current.cloud_cover);
-  cwWind.textContent = roundNumber(current.wind_speed_10m);
+  cwTemp.textContent = localizeDigits(roundNumber(current.temperature_2m));
+  cwFeels.textContent = localizeDigits(roundNumber(current.apparent_temperature));
+  precipValue.textContent = localizeDigits(roundNumber(current.precipitation * 10) / 10 || 0);
+  cloudValue.textContent = localizeDigits(roundNumber(current.cloud_cover));
+  cwWind.textContent = localizeDigits(roundNumber(current.wind_speed_10m));
   windDir.textContent = compassDirection(current.wind_direction_10m);
 
   renderSunMoon(weather.daily, current.time);
+
+  lastIsNight = current.is_day === 0;
+  applyTheme();
 
   if (current.time) {
     dataStatus.textContent = `Updated ${formatHourLabel(current.time)}`;
@@ -870,6 +895,23 @@ async function updateWeatherMap(location) {
   } catch {
     radarStatus.textContent = "Radar frame unavailable";
   }
+}
+
+function conditionTint(code, isNight) {
+  if (isNight) return "rgba(46, 64, 120, 0.30)";
+  if ([0, 1].includes(code)) return "rgba(228, 174, 79, 0.20)";
+  if (code === 2) return "rgba(139, 185, 202, 0.20)";
+  if ([3, 45, 48].includes(code)) return "rgba(120, 140, 152, 0.18)";
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return "rgba(150, 180, 210, 0.22)";
+  if ([95, 96, 99].includes(code)) return "rgba(120, 92, 170, 0.22)";
+  return "rgba(64, 116, 176, 0.22)"; // rain family
+}
+
+function applyTheme() {
+  const mode = settingsState.theme || "auto";
+  const dark = mode === "dark" || (mode === "auto" && lastIsNight);
+  root.dataset.theme = dark ? "dark" : "light";
+  root.style.setProperty("--cond-tint", conditionTint(currentWeatherCode, lastIsNight));
 }
 
 function compassDirection(deg) {
@@ -927,7 +969,7 @@ function renderAirQuality(data) {
   const { index, color } = aqiCategory(aqi);
   const circumference = 327; // 2 * pi * 52
 
-  aqiValue.textContent = aqi;
+  aqiValue.textContent = localizeDigits(aqi);
   aqiLevel.textContent = translations[activeLanguage].aqiLevels[index];
   aqiArc.style.stroke = color;
   aqiArc.style.strokeDashoffset = String(circumference * (1 - Math.min(aqi / 300, 1)));
@@ -951,11 +993,11 @@ function formatDuration(seconds) {
 
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.round((seconds % 3600) / 60);
-  return `${hours} h ${minutes} min`;
+  return localizeDigits(`${hours} h ${minutes} min`);
 }
 
 function formatDateShort(date) {
-  return new Intl.DateTimeFormat(activeLanguage === "fa" ? "fa-IR" : activeLanguage === "ro" ? "ro-RO" : "en-US", {
+  return new Intl.DateTimeFormat(activeLanguage === "fa" ? "fa-IR-u-ca-persian" : activeLanguage === "ro" ? "ro-RO" : "en-US", {
     month: "short",
     day: "numeric",
   }).format(date);
@@ -1027,7 +1069,7 @@ function renderSunMoon(daily, currentTime) {
 
   const moon = moonInfo(currentTime ? new Date(currentTime) : new Date());
   moonPhaseName.textContent = dictionary.moonPhases[moon.phaseIndex];
-  moonIllumination.textContent = `${moon.illumination}%`;
+  moonIllumination.textContent = localizeDigits(`${moon.illumination}%`);
   newMoonDate.textContent = formatDateShort(moon.nextNew);
   renderMoonVisual(moon.phaseFraction, moon.illumination);
 }
@@ -1226,6 +1268,8 @@ function setLocation(city) {
   locationLabel.textContent = city;
   widgetLocation.textContent = city.split(",")[0].trim() || city;
   setPhotoCaption(city);
+  updateFavButton();
+  renderCityChips();
 }
 
 async function updateHeroPhoto(city) {
@@ -1303,6 +1347,116 @@ function applyCity(city) {
   updateLiveCity(cleanedCity);
 }
 
+async function applyResolvedLocation(location) {
+  currentLocation = location;
+  setLocation(location.name);
+  updateHeroPhoto(location.name);
+  updateWeatherMap(location);
+  updateAirQuality(location);
+
+  try {
+    updateLiveWeatherUI(await fetchLiveWeather(location));
+  } catch {
+    dataStatus.textContent = "Live data unavailable";
+  }
+}
+
+function useMyLocation() {
+  if (!navigator.geolocation) {
+    dataStatus.textContent = "Location unavailable";
+    return;
+  }
+
+  dataStatus.textContent = "Locating…";
+  locateButton.classList.add("is-busy");
+
+  navigator.geolocation.getCurrentPosition(
+    async ({ coords }) => {
+      const { latitude, longitude } = coords;
+      let name = "My location";
+
+      try {
+        const lang = activeLanguage === "fa" ? "fa" : activeLanguage === "ro" ? "ro" : "en";
+        const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=${lang}`);
+        const data = await response.json();
+        const city = data.city || data.locality || data.principalSubdivision;
+        name = [city, data.principalSubdivision].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(", ") || name;
+      } catch {
+        // Reverse geocoding failed; keep the generic label but still show weather.
+      }
+
+      locateButton.classList.remove("is-busy");
+      applyResolvedLocation({ name, latitude, longitude, timezone: "auto" });
+    },
+    () => {
+      locateButton.classList.remove("is-busy");
+      dataStatus.textContent = "Location permission denied";
+    },
+    { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 },
+  );
+}
+
+function loadFavorites() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("talibenahFavorites") || "[]");
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveFavorites() {
+  localStorage.setItem("talibenahFavorites", JSON.stringify(favorites));
+}
+
+function isFavorite(city) {
+  return favorites.some((f) => normalizeCity(f) === normalizeCity(city));
+}
+
+function toggleFavorite() {
+  if (isFavorite(selectedCity)) {
+    favorites = favorites.filter((f) => normalizeCity(f) !== normalizeCity(selectedCity));
+  } else {
+    favorites = [...favorites, selectedCity];
+  }
+
+  saveFavorites();
+  updateFavButton();
+  renderCityChips();
+}
+
+function removeFavorite(city) {
+  favorites = favorites.filter((f) => normalizeCity(f) !== normalizeCity(city));
+  saveFavorites();
+  updateFavButton();
+  renderCityChips();
+}
+
+function updateFavButton() {
+  favButton.classList.toggle("is-fav", isFavorite(selectedCity));
+}
+
+function renderCityChips() {
+  const list = favorites.length ? favorites : defaultCities;
+  const removable = favorites.length > 0;
+
+  cityChips.innerHTML = list
+    .map((city) => {
+      const label = city.split(",")[0].trim();
+      const active = normalizeCity(city) === normalizeCity(selectedCity) ? "is-active" : "";
+      const remove = removable ? `<button type="button" class="chip-remove" data-remove="${city}" aria-label="Remove">×</button>` : "";
+      return `<span class="city-chip ${active}"><button type="button" data-city="${city}">${label}</button>${remove}</span>`;
+    })
+    .join("");
+
+  cityChips.querySelectorAll("[data-city]").forEach((button) => {
+    button.addEventListener("click", () => applyCity(button.dataset.city));
+  });
+  cityChips.querySelectorAll("[data-remove]").forEach((button) => {
+    button.addEventListener("click", () => removeFavorite(button.dataset.remove));
+  });
+}
+
 function translate(language) {
   const dictionary = translations[language];
   activeLanguage = language;
@@ -1335,11 +1489,12 @@ function translate(language) {
   renderDonationOptions();
   renderLayoutToggles();
   applyLayoutState();
-  renderHourly(lastWeather?.hourly || null);
-  renderDaily(lastWeather?.daily || null);
-
   if (lastWeather) {
-    renderSunMoon(lastWeather.daily, lastWeather.current?.time);
+    // Re-render every live value so digits/labels follow the new language.
+    updateLiveWeatherUI(lastWeather);
+  } else {
+    renderHourly();
+    renderDaily();
   }
 
   if (lastAirQuality) {
@@ -1366,7 +1521,7 @@ function renderHourly(hourly = null) {
         <article class="hour-card">
           <span>${time}</span>
           <img class="mini-weather" src="${getConditionIcon(code)}" alt="" />
-          <strong>${roundNumber(temp)}\u00b0</strong>
+          <strong>${localizeDigits(roundNumber(temp))}\u00b0</strong>
         </article>
       `,
     )
@@ -1396,7 +1551,7 @@ function renderDaily(daily = null) {
         <article class="day-row">
           <strong>${label}</strong>
           <img class="mini-weather" src="${getConditionIcon(code)}" alt="" />
-          <span>${roundNumber(low)}\u00b0 / ${roundNumber(high)}\u00b0</span>
+          <span>${localizeDigits(roundNumber(low))}\u00b0 / ${localizeDigits(roundNumber(high))}\u00b0</span>
           <span class="temp-bar" aria-hidden="true"><i style="width:${Math.max(8, chance)}%"></i></span>
         </article>
       `;
@@ -1405,7 +1560,7 @@ function renderDaily(daily = null) {
 }
 
 function loadSettings() {
-  const defaults = { ongoing: true, daily: false, customLayout: true };
+  const defaults = { theme: "auto", ongoing: true, daily: false, customLayout: true };
 
   try {
     return { ...defaults, ...JSON.parse(localStorage.getItem("talibenahSettings") || "{}") };
@@ -1464,6 +1619,7 @@ function closeSettings() {
 }
 
 const SETTINGS_ICONS = {
+  theme: '<circle cx="12" cy="12" r="9"/><path d="M12 3v18a9 9 0 0 0 0-18Z" fill="currentColor" stroke="none"/>',
   units: '<path d="M12 3a2 2 0 0 0-2 2v8.2a4 4 0 1 0 4 0V5a2 2 0 0 0-2-2Z"/>',
   widgetsHome: '<rect x="4" y="4" width="16" height="14" rx="2"/><path d="M4 9h16"/>',
   ongoing: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
@@ -1483,6 +1639,7 @@ function renderSettings() {
   const providerName = document.querySelector(".provider.is-selected span")?.textContent || "Open-Meteo";
 
   const rows = [
+    { key: "theme", label: labels.theme, cycle: "theme", value: dict.themeModes[settingsState.theme || "auto"] },
     { key: "units", label: labels.units, value: values.units },
     { key: "widgetsHome", label: labels.widgetsHome, toggle: "widgetsHome", value: onOff(layoutState.widget) },
     { key: "ongoing", label: labels.ongoing, toggle: "ongoing", value: onOff(settingsState.ongoing) },
@@ -1497,7 +1654,7 @@ function renderSettings() {
   settingsList.innerHTML = rows
     .map(
       (row) => `
-        <button class="settings-item" type="button" ${row.toggle ? `data-setting="${row.toggle}"` : ""}>
+        <button class="settings-item" type="button" ${row.toggle ? `data-setting="${row.toggle}"` : ""} ${row.cycle ? `data-cycle="${row.cycle}"` : ""}>
           <svg viewBox="0 0 24 24" aria-hidden="true">${SETTINGS_ICONS[row.key]}</svg>
           <span class="settings-text">
             <strong>${row.label}</strong>
@@ -1508,6 +1665,17 @@ function renderSettings() {
       `,
     )
     .join("");
+
+  settingsList.querySelectorAll("[data-cycle='theme']").forEach((button) => {
+    button.addEventListener("click", () => {
+      const order = ["auto", "light", "dark"];
+      const next = order[(order.indexOf(settingsState.theme || "auto") + 1) % order.length];
+      settingsState.theme = next;
+      saveSettings();
+      applyTheme();
+      renderSettings();
+    });
+  });
 
   settingsList.querySelectorAll("[data-setting]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -1572,9 +1740,8 @@ cityInput.addEventListener("keydown", (event) => {
   }
 });
 
-document.querySelectorAll("[data-city]").forEach((button) => {
-  button.addEventListener("click", () => applyCity(button.dataset.city));
-});
+locateButton.addEventListener("click", useMyLocation);
+favButton.addEventListener("click", toggleFavorite);
 
 languageButtons.forEach((button) => {
   button.addEventListener("click", () => translate(button.dataset.lang));
@@ -1596,6 +1763,13 @@ resetLayout.addEventListener("click", () => {
 
 renderHourly();
 applySettings();
+applyTheme();
 translate(activeLanguage);
 landmarksReady = loadLandmarks();
 updateLiveCity(selectedCity);
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
