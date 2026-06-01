@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+  <defs>
+    <linearGradient id="cloudA" x1="25" y1="54" x2="139" y2="126" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff"/>
+      <stop offset=".5" stop-color="#e1edf1"/>
+      <stop offset="1" stop-color="#9eb8c4"/>
+    </linearGradient>
+    <linearGradient id="cloudB" x1="13" y1="76" x2="112" y2="137" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#eef7f8"/>
+      <stop offset="1" stop-color="#9db3bf"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#cloudA)" d="M45 120c-18 0-31-11-31-26 0-13 9-24 23-27 6-22 25-37 47-37 25 0 46 19 50 43 10 3 17 12 17 23 0 14-12 24-30 24H45Z"/>
+  <path fill="url(#cloudB)" opacity=".92" d="M35 132c-15 0-26-9-26-22 0-11 8-20 20-23 5-17 21-29 40-29 21 0 38 15 42 34 12 2 21 11 21 22 0 10-10 18-25 18H35Z"/>
+  <path fill="#ffffff" opacity=".46" d="M43 75c10-18 25-29 45-30 18 0 32 7 41 22-12-9-26-13-41-12-20 1-35 8-45 20Z"/>
+</svg>

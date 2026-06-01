@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+  <defs>
+    <linearGradient id="storm" x1="22" y1="40" x2="140" y2="119" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f7fbff"/>
+      <stop offset=".46" stop-color="#aebfca"/>
+      <stop offset="1" stop-color="#526979"/>
+    </linearGradient>
+    <linearGradient id="bolt" x1="63" y1="89" x2="103" y2="151" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff6a8"/>
+      <stop offset="1" stop-color="#f4a51d"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#storm)" d="M45 111c-18 0-31-11-31-26 0-13 9-24 23-27 6-21 25-36 47-36 25 0 45 18 49 42 11 3 18 13 18 24 0 13-12 23-29 23H45Z"/>
+  <path fill="url(#bolt)" d="M78 91h31l-23 32h22l-42 37 13-31H57l21-38Z"/>
+</svg>

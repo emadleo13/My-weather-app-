@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c4638" />
+    <title>Talibenah Weather</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="phone-frame" aria-label="Talibenah Weather prototype">
+        <div class="hero">
+          <div class="hero-media">
+            <img id="heroPhoto" src="assets/talibenah-mountain.png" alt="" />
+          </div>
+          <div class="hero-shade"></div>
+
+          <header class="top-bar">
+            <button class="icon-button" type="button" aria-label="Menu">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16" />
+              </svg>
+            </button>
+            <div class="brand">
+              <span class="brand-mark" aria-hidden="true"></span>
+              <span data-i18n="brand">Talibenah</span>
+            </div>
+            <button class="icon-button" type="button" aria-label="Locate">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+                <circle cx="12" cy="12" r="5" />
+              </svg>
+            </button>
+          </header>
+
+          <form class="search-row" id="citySearch">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-3.5-3.5" />
+            </svg>
+            <input id="cityInput" data-i18n-placeholder="search" value="Talibenah, Gilan" />
+            <button class="search-submit" type="submit" aria-label="Search">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </form>
+
+          <div class="city-chips" aria-label="Popular city backgrounds">
+            <button type="button" data-city="Rasht, Iran">Rasht</button>
+            <button type="button" data-city="Tehran, Iran">Tehran</button>
+            <button type="button" data-city="Isfahan, Iran">Isfahan</button>
+            <button type="button" data-city="Bucharest, Romania">Bucharest</button>
+          </div>
+
+          <section class="current-panel">
+            <div>
+              <p class="location" id="locationLabel">Talibenah, Gilan</p>
+              <h1><span id="currentTemp">18</span><span>&deg;</span></h1>
+              <p class="condition" data-i18n="condition">Mist and light rain</p>
+            </div>
+            <div class="weather-glyph" aria-hidden="true">
+              <img id="conditionIcon" src="assets/weather/partly-cloudy.svg" alt="" />
+            </div>
+          </section>
+
+          <div class="summary-strip">
+            <div>
+              <span data-i18n="feels">Feels</span>
+              <strong id="feelsLike">17&deg;</strong>
+            </div>
+            <div>
+              <span data-i18n="rain">Rain</span>
+              <strong id="rainChance">72%</strong>
+            </div>
+            <div>
+              <span data-i18n="wind">Wind</span>
+              <strong id="windSpeed">9 km/h</strong>
+            </div>
+          </div>
+
+          <p class="photo-caption" id="photoCaption" data-i18n="photoCaption">Talibenah landscape view</p>
+        </div>
+
+        <section class="content">
+          <div class="control-row" aria-label="Language selector">
+            <button class="chip is-active" type="button" data-lang="en">EN</button>
+            <button class="chip" type="button" data-lang="fa">FA</button>
+            <button class="chip" type="button" data-lang="ro">RO</button>
+          </div>
+
+          <section class="customize-panel" aria-label="Customize home layout">
+            <div class="section-title">
+              <div>
+                <span class="support-kicker" data-i18n="customizeKicker">Your layout</span>
+                <h2 data-i18n="customizeTitle">Customize home</h2>
+              </div>
+              <button class="text-button" id="resetLayout" type="button" data-i18n="resetLayout">Reset</button>
+            </div>
+            <div class="layout-toggle-grid" id="layoutToggles"></div>
+          </section>
+
+          <section class="widget-panel" data-section="widget" aria-label="Android widget preview">
+            <div class="section-title">
+              <h2 data-i18n="widgetTitle">Widget preview</h2>
+              <span class="status-pill">2x1</span>
+            </div>
+            <div class="widget-preview">
+              <div>
+                <span id="widgetLocation">Talibenah</span>
+                <strong><span id="widgetTemp">18</span>&deg;</strong>
+              </div>
+              <img id="widgetIcon" src="assets/weather/partly-cloudy.svg" alt="" />
+              <p id="widgetCondition">Mist and light rain</p>
+            </div>
+          </section>
+
+          <section class="support-panel" data-section="support" aria-label="Support Talibenah development">
+            <div>
+              <span class="support-kicker" data-i18n="supportKicker">Community funded</span>
+              <h2 data-i18n="supportTitle">Support Talibenah</h2>
+              <p data-i18n="supportCopy">Small contributions help keep forecasts clean, fast, and ad-free.</p>
+            </div>
+            <div class="donation-grid" id="donationGrid"></div>
+            <p class="support-note" id="supportNote"></p>
+          </section>
+
+          <section class="map-panel" data-section="map" aria-label="Live satellite weather map">
+            <div class="section-title">
+              <div>
+                <h2 data-i18n="mapTitle">Live satellite map</h2>
+                <span id="mapStatus" class="map-status">Windy satellite + RainViewer radar</span>
+              </div>
+              <span class="status-pill" id="mapTime">Live</span>
+            </div>
+            <div class="satellite-map">
+              <iframe
+                id="satelliteFrame"
+                title="Live satellite weather map"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="radar-preview">
+              <img id="radarImage" alt="" />
+              <div>
+                <strong data-i18n="radarTitle">Rain radar</strong>
+                <span id="radarStatus">Waiting for live frame</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-section="sources">
+            <div class="section-title">
+              <h2 data-i18n="sources">Weather sources</h2>
+              <span class="status-pill" id="dataStatus" data-i18n="live">Live API</span>
+            </div>
+            <div class="provider-grid">
+              <button class="provider is-selected" type="button">
+                <span>Open-Meteo</span>
+                <strong>92%</strong>
+              </button>
+              <button class="provider" type="button">
+                <span>MET Norway</span>
+                <strong>88%</strong>
+              </button>
+              <button class="provider" type="button">
+                <span>WeatherAPI</span>
+                <strong>84%</strong>
+              </button>
+            </div>
+          </section>
+
+          <section class="panel" data-section="hourly">
+            <div class="section-title">
+              <h2 data-i18n="hourly">Hourly forecast</h2>
+              <button class="text-button" type="button" data-i18n="details">Details</button>
+            </div>
+            <div class="hourly-list" id="hourlyList"></div>
+          </section>
+
+          <section class="panel" data-section="details">
+            <div class="section-title">
+              <h2 data-i18n="detailsTitle">Details</h2>
+              <span class="status-pill">AQI 34</span>
+            </div>
+            <div class="metrics-grid">
+              <article>
+                <span data-i18n="humidity">Humidity</span>
+                <strong id="humidityValue">86%</strong>
+              </article>
+              <article>
+                <span data-i18n="pressure">Pressure</span>
+                <strong id="pressureValue">1014 hPa</strong>
+              </article>
+              <article>
+                <span data-i18n="uv">UV index</span>
+                <strong id="uvValue">3</strong>
+              </article>
+              <article>
+                <span data-i18n="visibility">Visibility</span>
+                <strong id="visibilityValue">7 km</strong>
+              </article>
+              <article>
+                <span data-i18n="dew">Dew point</span>
+                <strong id="dewValue">15&deg;</strong>
+              </article>
+              <article>
+                <span data-i18n="moon">Moon</span>
+                <strong data-i18n="moonValue">Waxing</strong>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel" data-section="daily">
+            <div class="section-title">
+              <h2 data-i18n="daily">7 day forecast</h2>
+            </div>
+            <div class="daily-list" id="dailyList"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

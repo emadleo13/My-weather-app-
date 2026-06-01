@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+  <defs>
+    <radialGradient id="sun" cx="46%" cy="42%" r="48%">
+      <stop offset="0%" stop-color="#fff8c9"/>
+      <stop offset="55%" stop-color="#ffd46b"/>
+      <stop offset="100%" stop-color="#ee9143"/>
+    </radialGradient>
+    <linearGradient id="cloud" x1="31" y1="66" x2="128" y2="124" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff"/>
+      <stop offset=".58" stop-color="#e7f1f3"/>
+      <stop offset="1" stop-color="#b9d0d8"/>
+    </linearGradient>
+    <filter id="glow" x="-35%" y="-35%" width="170%" height="170%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+  <circle cx="59" cy="57" r="34" fill="#ffd060" opacity=".34" filter="url(#glow)"/>
+  <circle cx="59" cy="57" r="27" fill="url(#sun)"/>
+  <path fill="url(#cloud)" d="M44 121c-18 0-31-11-31-26 0-13 10-24 24-26 6-20 24-34 45-34 24 0 44 18 48 41 12 4 20 13 20 25 0 12-11 20-27 20H44Z"/>
+  <path fill="#ffffff" opacity=".55" d="M38 80c9-18 23-29 42-31 17-1 31 6 40 20-10-9-23-13-38-12-19 2-33 9-44 23Z"/>
+</svg>
