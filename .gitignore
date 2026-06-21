@@ -1,0 +1,10 @@
+android.keystore
+*.apk
+*.aab
+*.dex
+*.class
+build/
+app/build/
+node_modules/
+docs/
+data/
