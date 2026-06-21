@@ -17,7 +17,7 @@
   "maskableIconUrl": "https://talibenah-weather.web.app/assets/icons/icon-maskable-512.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
-    "path": "/home/emadleo/talibenah-twa/android.keystore",
+    "path": "/home/emadleo/android.keystore",
     "alias": "talibenah"
   },
   "appVersionName": "1.0.0",
@@ -36,7 +36,7 @@
   "fullScopeUrl": "https://talibenah-weather.web.app/",
   "minSdkVersion": 21,
   "orientation": "portrait",
-  "fingerprints": [],
+  "fingerprints": ["24:86:34:3E:32:E0:E2:61:A3:49:5E:B9:C9:B9:12:23:99:72:20:21:C8:1C:F7:A7:7A:9E:4F:9E:C6:60:0E:9D"],
   "additionalTrustedOrigins": [],
   "retainedBundles": [],
   "appVersion": "1.0.0"
