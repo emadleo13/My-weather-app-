@@ -1,0 +1,27 @@
+# Android build artifacts
+.gradle/
+build/
+*.apk
+*.aab
+*.idsig
+
+# Node.js
+node_modules/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Signing keys
+*.keystore
+*.jks
+key.properties
+
+# Environment
+.env
+.env.local
