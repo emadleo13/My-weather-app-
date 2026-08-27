@@ -11,7 +11,7 @@
   "navigationDividerColor": "#0a1a2e",
   "navigationDividerColorDark": "#0a1a2e",
   "backgroundColor": "#0a2444",
-  "enableNotifications": false,
+  "enableNotifications": true,
   "startUrl": "/",
   "iconUrl": "https://talibenah-weather.web.app/assets/icons/icon-512.png",
   "maskableIconUrl": "https://talibenah-weather.web.app/assets/icons/icon-maskable-512.png",
