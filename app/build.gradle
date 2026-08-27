@@ -50,15 +50,27 @@ def twaManifest = [
     orientation: 'portrait',
 ]
 
+// Load signing credentials from key.properties (git-ignored) with env-var fallback.
+// Never hard-code passwords in this file.
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withInputStream { keystoreProperties.load(it) }
+}
+def signingStoreFile = keystoreProperties['storeFile'] ?: System.getenv("KEYSTORE_FILE") ?: "/home/emadleo/android.keystore"
+def signingStorePassword = keystoreProperties['storePassword'] ?: System.getenv("STORE_PASSWORD")
+def signingKeyAlias = keystoreProperties['keyAlias'] ?: System.getenv("KEY_ALIAS") ?: "talibenah"
+def signingKeyPassword = keystoreProperties['keyPassword'] ?: System.getenv("KEY_PASSWORD")
+
 android {
     compileSdkVersion 36
     namespace "com.talibenah.weather"
     signingConfigs {
         release {
-            storeFile file("/home/emadleo/android.keystore")
-            storePassword System.getenv("STORE_PASSWORD") ?: "***REMOVED***"
-            keyAlias "talibenah"
-            keyPassword System.getenv("KEY_PASSWORD") ?: "***REMOVED***"
+            storeFile file(signingStoreFile)
+            storePassword signingStorePassword
+            keyAlias signingKeyAlias
+            keyPassword signingKeyPassword
         }
     }
     defaultConfig {
